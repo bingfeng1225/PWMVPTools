@@ -12,12 +12,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.qd.peiwen.mvp.base.BasePresenter;
 
 public abstract class MVPFragment extends Fragment {
-    protected Unbinder unbinder;
     protected List<BasePresenter> presenters = new ArrayList<>();
 
     @Override
@@ -39,7 +36,6 @@ public abstract class MVPFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(this.layoutId(), container, false);
-        unbinder = ButterKnife.bind(this, root);
         this.initPresent();
         this.initViewDisplay();
         this.initEventAndListener();
@@ -66,7 +62,6 @@ public abstract class MVPFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        unbinder.unbind();
         for (BasePresenter presenter:this.presenters) {
             presenter.onDestroy();
             presenter.detachView();

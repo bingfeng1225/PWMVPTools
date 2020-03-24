@@ -6,19 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import cn.qd.peiwen.mvp.base.BasePresenter;
 
 public abstract class MVPActivity extends AppCompatActivity {
-    protected Unbinder unbinder;
     protected List<BasePresenter> presenters = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(this.layoutId());
-        unbinder = ButterKnife.bind(this);
         this.initPresent();
         this.initViewDisplay();
         this.initEventAndListener();
@@ -46,7 +42,6 @@ public abstract class MVPActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        unbinder.unbind();
         for (BasePresenter presenter:this.presenters) {
             presenter.onDestroy();
             presenter.detachView();
