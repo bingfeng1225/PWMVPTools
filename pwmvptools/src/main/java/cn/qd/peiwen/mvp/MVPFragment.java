@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import cn.qd.peiwen.mvp.base.BasePresenter;
@@ -62,13 +63,19 @@ public abstract class MVPFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        for (BasePresenter presenter:this.presenters) {
-            presenter.onDestroy();
-            presenter.detachView();
-        }
+        this.releasePresent();
         super.onDestroyView();
     }
 
+    private void releasePresent(){
+        Iterator<BasePresenter> iterator = this.presenters.iterator();
+        while (iterator.hasNext()){
+            BasePresenter presenter = iterator.next();
+            presenter.onDestroy();
+            presenter.detachView();
+            iterator.remove();
+        }
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

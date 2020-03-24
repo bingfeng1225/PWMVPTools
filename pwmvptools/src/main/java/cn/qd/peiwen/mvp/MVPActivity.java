@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import cn.qd.peiwen.mvp.base.BasePresenter;
@@ -42,11 +43,18 @@ public abstract class MVPActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        for (BasePresenter presenter:this.presenters) {
+        this.releasePresent();
+        super.onDestroy();
+    }
+
+    private void releasePresent(){
+        Iterator<BasePresenter> iterator = this.presenters.iterator();
+        while (iterator.hasNext()){
+            BasePresenter presenter = iterator.next();
             presenter.onDestroy();
             presenter.detachView();
+            iterator.remove();
         }
-        super.onDestroy();
     }
     /***
      * 初始化UI组件
