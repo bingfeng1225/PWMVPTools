@@ -16,6 +16,7 @@ import java.util.List;
 import cn.qd.peiwen.mvp.base.BasePresenter;
 
 public abstract class MVPFragment extends Fragment {
+    protected View rootView;
     protected List<BasePresenter> presenters = new ArrayList<>();
 
     @Override
@@ -36,14 +37,14 @@ public abstract class MVPFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(this.layoutId(), container, false);
+        this.rootView = inflater.inflate(this.layoutId(), container, false);
         this.initPresent();
         this.initViewDisplay();
         this.initEventAndListener();
         for (BasePresenter presenter:this.presenters) {
             presenter.onCreate();
         }
-        return root;
+        return rootView;
     }
 
     @Override
