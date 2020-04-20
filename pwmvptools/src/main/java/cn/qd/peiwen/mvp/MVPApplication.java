@@ -1,6 +1,7 @@
 package cn.qd.peiwen.mvp;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,7 +9,7 @@ import java.util.List;
 
 import cn.qd.peiwen.mvp.base.BasePresenter;
 
-public abstract class MVPApplication extends Application {
+public abstract class MVPApplication extends MultiDexApplication {
 
     protected List<BasePresenter> presenters = new ArrayList<>();
 
